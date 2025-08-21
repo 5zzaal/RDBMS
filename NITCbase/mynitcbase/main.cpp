@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
 */
 
-
+/*
 void q1(){
   RecBuffer relCatBuffer(RELCAT_BLOCK);
   HeadInfo relCatHeader;
@@ -44,12 +44,12 @@ void q1(){
     Attribute relCatRecord[RELCAT_NO_ATTRS];
     relCatBuffer.getRecord(relCatRecord, i);
     printf("Relation: %s\n", relCatRecord[RELCAT_REL_NAME_INDEX].sVal);
-    printf("no of attributes: %f\n", relCatRecord[RELCAT_NO_ATTRIBUTES_INDEX].nVal);
-    printf("no of records: %f\n", relCatRecord[RELCAT_NO_RECORDS_INDEX].nVal);
-    printf("no of slot: %f\n", relCatRecord[RELCAT_NO_SLOTS_PER_BLOCK_INDEX].nVal);
+    //printf("no of attributes: %f\n", relCatRecord[RELCAT_NO_ATTRIBUTES_INDEX].nVal);
+   // printf("no of records: %f\n", relCatRecord[RELCAT_NO_RECORDS_INDEX].nVal);
+   // printf("no of slot: %f\n", relCatRecord[RELCAT_NO_SLOTS_PER_BLOCK_INDEX].nVal);
 
      int attrCatBlockNumber = ATTRCAT_BLOCK;
-     /*
+     
      while(attrCatBlockNumber!=-1){
       RecBuffer attrCatBuffer(attrCatBlockNumber);
       HeadInfo attrCatHeader;
@@ -64,8 +64,27 @@ void q1(){
           printf(" %s: %s\n", attrCatRecord[ATTRCAT_ATTR_NAME_INDEX].sVal, attrType);
         }
       }
-     }  */
+     }  
      printf("\n");
+  }
+}
+*/
+
+void printRelAttr() {
+  for (int i = 0; i < 2; i++) {
+    RelCatEntry relCatBuf;
+    RelCacheTable::getRelCatEntry(i, &relCatBuf);
+
+    printf("Relation: %s\n", relCatBuf.relName);
+
+    for (int j = 0; j < relCatBuf.numAttrs; j++) {
+      AttrCatEntry attrCatBuf;
+      AttrCacheTable::getAttrCatEntry(i, j, &attrCatBuf);
+      const char* attrType = (attrCatBuf.attrType == NUMBER)
+        ? "NUM"
+        : "STR";
+      printf("\t%s : %s\n", attrCatBuf.attrName, attrType);
+    }
   }
 }
 
@@ -74,14 +93,17 @@ void q1(){
 
 
 
+
+
+
 int main(int argc, char *argv[]) {
   Disk disk_run;
+  StaticBuffer buffer;
+  OpenRelTable cache;
 
- 
-  q1();
-
-  return 0;
+  return FrontendInterface::handleFrontend(argc, argv);
 }
+
 
 
 
@@ -157,6 +179,15 @@ void q2(){
     }
 }*/
 
+
+
+
+
+
+
+
+
+  
 
 
 
