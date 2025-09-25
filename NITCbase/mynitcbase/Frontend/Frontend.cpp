@@ -14,27 +14,32 @@ int Frontend::drop_table(char relname[ATTR_SIZE]) {
   return SUCCESS;
 }
 
+
+//stage 5
 int Frontend::open_table(char relname[ATTR_SIZE]) {
-  // Schema::openRel
-  return SUCCESS;
+  return Schema::openRel(relname);
 }
 
 int Frontend::close_table(char relname[ATTR_SIZE]) {
-  // Schema::closeRel
-  return SUCCESS;
+  return Schema::closeRel(relname);
 }
+//
+
+//stage 6
 
 int Frontend::alter_table_rename(char relname_from[ATTR_SIZE], char relname_to[ATTR_SIZE]) {
-  // Schema::renameRel
-  return SUCCESS;
+
+  return Schema::renameRel(relname_from,relname_to);
 }
 
-int Frontend::alter_table_rename_column(char relname[ATTR_SIZE], char attrname_from[ATTR_SIZE],
-                                        char attrname_to[ATTR_SIZE]) {
-  // Schema::renameAttr
-  return SUCCESS;
+int Frontend::alter_table_rename_column(char relname[ATTR_SIZE], char attrname_from[ATTR_SIZE], char attrname_to[ATTR_SIZE])
+{
+    return Schema::renameAttr(relname,attrname_from,attrname_to);
 }
 
+
+
+//
 int Frontend::create_index(char relname[ATTR_SIZE], char attrname[ATTR_SIZE]) {
   // Schema::createIndex
   return SUCCESS;
@@ -61,11 +66,12 @@ int Frontend::select_attrlist_from_table(char relname_source[ATTR_SIZE], char re
   return SUCCESS;
 }
 
+//stage 4
 int Frontend::select_from_table_where(char relname_source[ATTR_SIZE], char relname_target[ATTR_SIZE],
                                       char attribute[ATTR_SIZE], int op, char value[ATTR_SIZE]) {
-  // Algebra::select
-  return SUCCESS;
+  return Algebra::select(relname_source, relname_target, attribute, op, value);
 }
+//
 
 int Frontend::select_attrlist_from_table_where(char relname_source[ATTR_SIZE], char relname_target[ATTR_SIZE],
                                                int attr_count, char attr_list[][ATTR_SIZE],
